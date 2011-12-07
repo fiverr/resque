@@ -11,7 +11,7 @@ require 'resque/server'
 
 
 CREDENTIALS = ENV['AUTH']
-if CREDENTIALS
+if CREDENTIALS.to_s != ''
   cred = credentials
 else
   cred = "fiverr:fewf9wedvjew832D"
