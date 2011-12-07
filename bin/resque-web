@@ -9,23 +9,6 @@ rescue LoadError
 end  
 require 'resque/server'
 
-
-CREDENTIALS = ENV['AUTH']
-if CREDENTIALS.to_s != ''
-  cred = credentials
-else
-  cred = "fiverr:fewf9wedvjew832D"
-end
-
-  Resque::Server.use Rack::Auth::Basic do |username, password|
-    credentials = cred.split(':',2)
-    if credentials.size == 2
-      username, password = credentials[0], credentials[1]
-    else
-      password = credentials[0]
-    end
-  end
-
 Vegas::Runner.new(Resque::Server, 'resque-web', {
   :before_run => lambda {|v|
     path = (ENV['RESQUECONFIG'] || v.args.first)

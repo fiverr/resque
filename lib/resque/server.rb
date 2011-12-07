@@ -3,9 +3,13 @@ require 'erb'
 require 'resque'
 require 'resque/version'
 require 'time'
-
+puts "server"
 module Resque
   class Server < Sinatra::Base
+    use Rack::Auth::Basic, "Restricted Area" do |username, password|
+      [username, password] == ['admin', 'd3EfdC45nj']
+    end
+    
     dir = File.dirname(File.expand_path(__FILE__))
 
     set :views,  "#{dir}/server/views"
