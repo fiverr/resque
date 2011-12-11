@@ -3,13 +3,16 @@ require 'erb'
 require 'resque'
 require 'resque/version'
 require 'time'
-
 if defined? Encoding
   Encoding.default_external = Encoding::UTF_8
 end
 
 module Resque
   class Server < Sinatra::Base
+    use Rack::Auth::Basic, "Restricted Area" do |username, password|
+      [username, password] == ['admin', 'd3EfdC45nj']
+    end
+    
     dir = File.dirname(File.expand_path(__FILE__))
 
     set :views,  "#{dir}/server/views"
